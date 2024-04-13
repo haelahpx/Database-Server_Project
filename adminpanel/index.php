@@ -1,10 +1,10 @@
 <?php
+include '../config.php';
 session_start();
 if(!isset($_SESSION['email'])) {
-    header('Location: login.php');
+    header('Location: ../login.php');
     exit;
 }
-require "../config.php";
 
 $totalcategory = 0;
 $querycategory = mysqli_query($conn, "SELECT * FROM category");
@@ -48,7 +48,7 @@ if ($queryproduct) {
                 <h1 class="text-xl font-bold">Category</h1>
                 <p></p>
                 <p class="text-gray-300"><?php echo $totalcategory ?> categories</p>
-                <p class="text-gray-300">Details</p>
+                <a href="category.php"><p class="text-gray-300">Details</p></a>
             </div>
         </div>
     </div>
@@ -64,7 +64,7 @@ if ($queryproduct) {
                 <h1 class="text-xl font-bold">Product</h1>
                 <p></p>
                 <p class="text-gray-300"><?php echo $totalproduct ?> products</p>
-                <p class="text-gray-300">Details</p>
+                <a href="product.php"><p class="text-gray-300">Details</p></a>
             </div>
         </div>
     </div>

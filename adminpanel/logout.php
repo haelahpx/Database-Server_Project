@@ -1,10 +1,11 @@
 <?php
+
+@include 'config.php';
+
 session_start();
-
-$_SESSION = array();
-
+session_unset();
 session_destroy();
 
-header("Location: login.php");
-exit;
+header('location:../index.php');
+
 ?>

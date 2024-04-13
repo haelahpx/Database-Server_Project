@@ -2,22 +2,86 @@
 session_start();
 require "../config.php";
 
-// Check if delete action is triggered
+$query = mysqli_query($conn, "SELECT product.*, category.category_name FROM product JOIN category ON product.category_id = category.category_id");
+$totalProduct = mysqli_num_rows($query);
+
 if(isset($_GET['delete_id'])) {
-    $delete_id = $_GET['delete_id'];
-    // Perform deletion query
-    $deleteQuery = mysqli_query($conn, "DELETE FROM product WHERE product_id = '$delete_id'");
-    if($deleteQuery) {
-        // Redirect back to the page after deletion
-        header("Location: product.php");
-        exit();
+    $delete_id = mysqli_real_escape_string($conn, $_GET['delete_id']);
+
+    $deleteProductDetailsQuery = mysqli_query($conn, "DELETE FROM productdetails WHERE product_id = '$delete_id'");
+    if($deleteProductDetailsQuery) {
+        $deleteProductQuery = mysqli_query($conn, "DELETE FROM product WHERE product_id = '$delete_id'");
+        if($deleteProductQuery) {
+            header("Location: product.php");
+            exit();
+        } else {
+            echo "Error deleting product record: " . mysqli_error($conn);
+            exit();
+        }
     } else {
-        echo "Error deleting record: " . mysqli_error($conn);
+        echo "Error deleting related product details: " . mysqli_error($conn);
+        exit();
     }
 }
 
-$query = mysqli_query($conn, "SELECT product.*, category.category_name FROM product JOIN category ON product.category_id = category.category_id");
-$totalProduct = mysqli_num_rows($query);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $product_name = $_POST['product_name'];
+    $category_id = $_POST['category'];
+    $fileName = basename($_FILES["image"]["name"]);
+
+    $target_dir = "../image/";
+    $target_file = $target_dir . $fileName;
+    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+    $image_size = $_FILES["image"]["size"];
+
+    if (getimagesize($_FILES["image"]["tmp_name"]) === false) {
+        echo "File is not an image.";
+        exit();
+    }
+
+    if ($image_size > 500000) {
+        echo "Sorry, your file is too large.";
+        exit();
+    }
+
+    if (!in_array($imageFileType, ["jpg", "jpeg", "png"])) {
+        echo "Sorry, only JPG, JPEG & PNG files are allowed.";
+        exit();
+    }
+
+    if (!move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+        echo "Sorry, there was an error uploading your file.";
+        exit();
+    }
+
+    $checkQuery = mysqli_query($conn, "SELECT * FROM product WHERE product_name='$product_name'");
+    if (mysqli_num_rows($checkQuery) > 0) {
+        $existingProduct = mysqli_fetch_assoc($checkQuery);
+        if ($existingProduct['category_id'] != $category_id) {
+            $insertQuery = "INSERT INTO product (product_name, category_id, image) VALUES (?, ?, ?)";
+            $stmt = mysqli_prepare($conn, $insertQuery);
+            mysqli_stmt_bind_param($stmt, "sis", $product_name, $category_id, $fileName);
+            if (mysqli_stmt_execute($stmt)) {
+                $product_id = mysqli_insert_id($conn);
+                header("Location: product.php?id=$product_id");
+                exit();
+            } else {
+                echo "Error inserting record: " . mysqli_error($conn); 
+            }
+        } 
+    } else {
+        $insertQuery = "INSERT INTO product (product_name, category_id, image) VALUES (?, ?, ?)";
+        $stmt = mysqli_prepare($conn, $insertQuery);
+        mysqli_stmt_bind_param($stmt, "sis", $product_name, $category_id, $fileName);
+        if (mysqli_stmt_execute($stmt)) {
+            $product_id = mysqli_insert_id($conn);
+            header("Location: product.php?id=$product_id");
+            exit();
+        } else {
+            echo "Error inserting record: " . mysqli_error($conn);
+        }
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -83,10 +147,14 @@ $totalProduct = mysqli_num_rows($query);
     <div class="max-w-4xl mx-auto pt-4">
         <div class="bg-white shadow-md rounded-lg">
             <h3 class="text-lg font-bold mb-4 text-gray-800 px-6 py-4 border-b border-gray-200">Add Product</h3>
-            <form action="" method="post" class="space-y-4 px-6 py-4">
-            <div>
-                    <label for="product" class="block text-sm font-medium text-gray-700">Product</label>
-                    <input type="text" id="product" name="product" placeholder="Input Product Name" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200" required />
+            <form action="" method="post" enctype="multipart/form-data" class="space-y-4 px-6 py-4">
+                <div>
+                    <label for="product_name" class="block text-sm font-medium text-gray-700">Product</label>
+                    <input type="text" id="product_name" name="product_name" placeholder="Input Product Name" class="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 focus:ring focus:ring-blue-200" required />
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="image">Image</label>
+                    <input type="file" name="image" id="image" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required >
                 </div>
                 <div>
                     <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
@@ -106,18 +174,45 @@ $totalProduct = mysqli_num_rows($query);
             </form>
             <?php
             if (isset($_POST['save'])) {
-                $product = htmlspecialchars($_POST['product']);
+                $product_name = htmlspecialchars($_POST['product_name']);
                 $category_id = $_POST['category'];
 
-                $checkQuery = mysqli_query($conn, "SELECT * FROM product WHERE product_name='$product'");
+                $checkQuery = mysqli_query($conn, "SELECT * FROM product WHERE product_name='$product_name'");
                 if (mysqli_num_rows($checkQuery) > 0) {
                     $existingProduct = mysqli_fetch_assoc($checkQuery);
                     if ($existingProduct['category_id'] != $category_id) {
-                        $saveQuery = mysqli_query($conn, "INSERT INTO product (product_name, category_id) VALUES ('$product', '$category_id')");
+                        $saveQuery = mysqli_query($conn, "INSERT INTO product (product_name, category_id) VALUES ('$product_name', '$category_id')");
 
                         if ($saveQuery) {
-            ?>
-                            <div id="successAlert" class="flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                            echo '<div id="successAlert" class="flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                                    <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                                    </svg>
+                                    <span class="sr-only">Info</span>
+                                    <div>
+                                        <span class="font-medium">Success alert!</span> The product has been added.
+                                    </div>
+                                    <meta http-equiv="refresh" content="1; url=product.php" />
+                                </div>';
+                        } else {
+                            echo mysqli_error($conn);
+                        }
+                    } else {
+                        echo '<div id="warningAlert" class="flex items-center p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300" role="alert">
+                                <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                                </svg>
+                                <span class="sr-only">Info</span>
+                                <div>
+                                    <span class="font-medium">Warning alert!</span> The product you entered already exists in the same category.
+                                </div>
+                            </div>';
+                    }
+                } else {
+                    $saveQuery = mysqli_query($conn, "INSERT INTO product (product_name, category_id) VALUES ('$product_name', '$category_id')");
+
+                    if ($saveQuery) {
+                        echo '<div id="successAlert" class="flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
                                 <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
                                 </svg>
@@ -126,41 +221,7 @@ $totalProduct = mysqli_num_rows($query);
                                     <span class="font-medium">Success alert!</span> The product has been added.
                                 </div>
                                 <meta http-equiv="refresh" content="1; url=product.php" />
-                            </div>
-            <?php
-                        } else {
-                            echo mysqli_error($conn);
-                        }
-                    } else {
-
-            ?>
-                        <div id="warningAlert" class="flex items-center p-4 mb-4 text-sm text-yellow-800 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300" role="alert">
-                            <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                            </svg>
-                            <span class="sr-only">Info</span>
-                            <div>
-                                <span class="font-medium">Warning alert!</span> The product you entered already exists in the same category.
-                            </div>
-                        </div>
-            <?php
-                    }
-                } else {
-                    $saveQuery = mysqli_query($conn, "INSERT INTO product (product_name, category_id) VALUES ('$product', '$category_id')");
-
-                    if ($saveQuery) {
-            ?>
-                        <div id="successAlert" class="flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
-                            <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                            </svg>
-                            <span class="sr-only">Info</span>
-                            <div>
-                                <span class="font-medium">Success alert!</span> The product has been added.
-                            </div>
-                            <meta http-equiv="refresh" content="1; url=product.php" />
-                        </div>
-            <?php
+                            </div>';
                     } else {
                         echo mysqli_error($conn);
                     }

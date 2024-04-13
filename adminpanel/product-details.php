@@ -4,8 +4,10 @@ require "../config.php";
 
 $id = $_GET['id'] ?? null;
 
+$query = mysqli_query($conn, "SELECT * FROM product WHERE product_id ='$id'");
+$data = mysqli_fetch_array($query);
+
 if ($id !== null) {
-    // Prevent SQL injection using prepared statements
     $stmt = mysqli_prepare($conn, "SELECT productdetails.*, product.product_name FROM productdetails JOIN product ON productdetails.product_id = product.product_id WHERE productdetails.product_id = ?");
     mysqli_stmt_bind_param($stmt, "i", $id);
     mysqli_stmt_execute($stmt);
@@ -20,38 +22,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $price = $_POST['price'];
     $product_id = $_POST['product_id'];
 
-    // Handle image upload
     $target_dir = "../image/";
     $fileNames = basename($_FILES["image"]["name"]);
     $target_file = $target_dir . $fileNames;
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
     $image_size = $_FILES["image"]["size"];
 
-    // Check if file is an image
     if (getimagesize($_FILES["image"]["tmp_name"]) === false) {
         echo "File is not an image.";
         exit();
     }
 
-    // Check file size
     if ($image_size > 500000) {
         echo "Sorry, your file is too large.";
         exit();
     }
 
-    // Allow certain file formats
-    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+    if (!in_array($imageFileType, ["jpg", "jpeg", "png"])) {
         echo "Sorry, only JPG, JPEG & PNG files are allowed.";
         exit();
     }
 
-    // Move uploaded file to destination directory
     if (!move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
         echo "Sorry, there was an error uploading your file.";
         exit();
     }
 
-    // Insert data into database
     $insertQuery = "INSERT INTO productdetails (description, price, image, product_id) VALUES (?, ?, ?, ?)";
     $stmt = mysqli_prepare($conn, $insertQuery);
     mysqli_stmt_bind_param($stmt, "sssi", $description, $price, $fileNames, $product_id);
@@ -59,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header("Location: product-details.php?id=$product_id");
         exit();
     } else {
-        echo "Error inserting record: " . mysqli_error($conn); // Display the MySQL error
+        echo "Error inserting record: " . mysqli_error($conn); 
     }
 }
 ?>
@@ -85,6 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <div class="max-w-4xl mx-auto bg-white rounded-lg">
         <h1 class="text-3xl font-bold text-gray-800 my-6">Details Product</h1>
+        <img src="../image/<?php echo $data['image'] ?>" alt="Product Image" width="100" class="rounded"></br>
         <div class="overflow-hidden shadow-md rounded-lg">
             <table class="w-full">
                 <thead>
@@ -131,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <div class="max-w-4xl mx-auto bg-white rounded-lg">
-        <h1 class="text-3xl font-bold text-gray-800 my-6">Add Product</h1>
+        <h1 class="text-3xl font-bold text-gray-800 my-6">Add Item</h1>
         <div class="overflow-hidden shadow-md rounded-lg">
             <form method="POST" class="my-6 mx-4" enctype="multipart/form-data">
                 <div class="mb-4">
