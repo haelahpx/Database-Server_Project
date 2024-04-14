@@ -106,14 +106,14 @@ if ($id !== null) {
                     <input class="peer " type="radio" id="payment_indomaret" name="payment_method" value="Indomaret" />
                     <div class="payment-content rounded-md shadow-md p-4 border border-gray-200 hover:border-indigo-400 transition duration-300">
                         <img class="w-32 mx-auto" src="image/indomaret.png" alt="Indomaret">
-                        <p class="text-lg font-semibold mt-4">Price: $<?= $price ?></p>
+                        <p class="text-lg font-semibold mt-4">Rp.<?= $price ?></p>
                     </div>
                 </label>
                 <label for="payment_qris" class="relative cursor-pointer">
                     <input class="peer " type="radio" id="payment_qris" name="payment_method" value="Qris" />
                     <div class="payment-content rounded-md shadow-md p-4 border border-gray-200 hover:border-indigo-400 transition duration-300">
                         <img class="w-32 mx-auto" src="image/qris.png" alt="Qris">
-                        <p class="text-lg font-semibold mt-4">Price: $<?= $price ?></p>
+                        <p class="text-lg font-semibold mt-4">Rp.<?= $price ?></p>
                     </div>
                 </label>
             </div>

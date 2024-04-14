@@ -28,6 +28,7 @@ $result_game = mysqli_query($conn, $query_game);
 </head>
 <body class="bg-gray-300">
     <?php require "navbar.php"; ?>
+    
     <h1 class="text-2xl font-bold text-left my-8 pl-10">Recommendation</h1>
     <div class="flex flex-wrap justify-center">
         <?php while ($row = mysqli_fetch_assoc($result)): ?>

@@ -1,48 +1,79 @@
-<nav class="bg-gray-100">
-    <div class="max-w-6xl mx-auto px-4">
-        <div class="flex justify-between">
 
-            <div class="flex space-x-4">
-                <div>
-                    <a href="home.php" class="flex items-center py-5 px-2 text-gray-700 hover:text-gray-900">
-                        <svg class="h-6 w-6 mr-1 text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                        </svg>
-                        <span class="font-bold">ItSeven</span>
-                    </a>
+<style>
+    #user-dropdown {
+        top: calc(0.5rem);
+    }
+    @media (max-width: 768px) {
+        #text {
+            display: none;
+        }
+    }
+</style>
+<nav class="bg-white border-gray-200 dark:bg-gray-900">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <a href="home.php" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
+            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">ItSeven</span>
+        </a>
+        <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+            <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+                <span class="sr-only">Open user menu</span>
+                <img class="w-8 h-8 rounded-full" src="./image/coc.jpg" alt="user photo">
+            </button>
+            <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 absolute right-0 mt-12" id="user-dropdown">
+                <div class="px-4 py-3">
+                    <?php if (isset($_SESSION['user_name'])) { ?>
+                        <span class="block text-sm text-gray-900 dark:text-white"><?php echo $_SESSION['user_name']; ?></span>
+                    <?php } ?>
+                    <span class="block text-sm  text-gray-500 truncate dark:text-gray-400"><?php echo $_SESSION['email']; ?></span>
                 </div>
-
-                <div class="hidden md:flex items-center space-x-1">
-                    <a href="about.php" class="py-5 px-3 text-gray-700 hover:text-gray-900">About</a>
-                </div>
+                <ul class="py-2" aria-labelledby="user-menu-button">
+                    <li>
+                        <a href="dashboard.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="adminpanel/logout.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                    </li>
+                </ul>
             </div>
-
-            <div class="hidden md:flex items-center space-x-1">
-                <a href="adminpanel/logout.php" class="py-5 px-3">Logout</a>
-            </div>
-
-            <div class="md:hidden flex items-center">
-                <button class="mobile-menu-button">
-                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
-            </div>
-
+            <button data-collapse-toggle="navbar-user" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-user" aria-expanded="false">
+                <span class="sr-only">Open main menu</span>
+                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
+                </svg>
+            </button>
         </div>
-    </div>
-
-    <div class="mobile-menu hidden md:hidden">
-        <a href="about.php" class="block py-2 px-4 text-sm hover:bg-gray-200">About</a>
-        <a href="adminpanel/logout.php" class="block py-2 px-4 text-sm hover:bg-gray-200">Logout</a>
+        <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
+            <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                <li>
+                    <a href="home.php" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500" aria-current="page">Home</a>
+                </li>
+                <li>
+                    <a href="about.php" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">About</a>
+                </li>
+            </ul>
+        </div>
+        <p id="text" class="text-white">Anti-Blind Map Top Up Website, Fastest and Most Trusted in Indonesia.</p>
     </div>
 </nav>
 
 <script>
-    const btn = document.querySelector("button.mobile-menu-button");
-    const menu = document.querySelector(".mobile-menu");
+    document.addEventListener("DOMContentLoaded", function() {
+        const userMenuButton = document.getElementById("user-menu-button");
+        const userDropdown = document.getElementById("user-dropdown");
+        const navbarUserButton = document.querySelector("[data-collapse-toggle='navbar-user']");
+        const navbarUser = document.getElementById("navbar-user");
 
-    btn.addEventListener("click", () => {
-        menu.classList.toggle("hidden");
+        userMenuButton.addEventListener("click", function() {
+            const expanded = userMenuButton.getAttribute("aria-expanded") === "true" || false;
+            userMenuButton.setAttribute("aria-expanded", !expanded);
+            userDropdown.classList.toggle("hidden");
+        });
+
+        navbarUserButton.addEventListener("click", function() {
+            const expanded = navbarUserButton.getAttribute("aria-expanded") === "true" || false;
+            navbarUserButton.setAttribute("aria-expanded", !expanded);
+            navbarUser.classList.toggle("hidden");
+        });
     });
 </script>
