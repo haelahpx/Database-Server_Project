@@ -1,4 +1,12 @@
+<?php
+require "config.php";
 
+$id = $_SESSION['customer_id'];
+
+$query_customer = mysqli_query($conn, "SELECT * FROM customers WHERE customer_id ='$id'");
+$data_customer = mysqli_fetch_array($query_customer);
+
+?>
 <style>
     #user-dropdown {
         top: calc(0.5rem);
@@ -18,7 +26,7 @@
         <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                 <span class="sr-only">Open user menu</span>
-                <img class="w-8 h-8 rounded-full" src="./image/coc.jpg" alt="user photo">
+                <img class="w-8 h-8 rounded-full" src="image/<?php echo $data_customer['image'] ?>" alt="user photo">
             </button>
             <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600 absolute right-0 mt-12" id="user-dropdown">
                 <div class="px-4 py-3">

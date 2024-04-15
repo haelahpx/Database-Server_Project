@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 13, 2024 at 05:44 PM
+-- Generation Time: Apr 16, 2024 at 01:41 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -54,16 +54,17 @@ CREATE TABLE `customers` (
   `last_name` varchar(100) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL,
-  `user_type` enum('admin','user') NOT NULL DEFAULT 'user'
+  `user_type` enum('admin','user') NOT NULL DEFAULT 'user',
+  `image` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`customer_id`, `username`, `first_name`, `last_name`, `email`, `password`, `user_type`) VALUES
-(2, 'admin', 'admin', 'first', 'admin@gmail.com', '0192023a7bbd73250516f069df18b500', 'admin'),
-(3, 'test', 'test', 'first', 'test@gmail.com', '098f6bcd4621d373cade4e832627b4f6', 'user');
+INSERT INTO `customers` (`customer_id`, `username`, `first_name`, `last_name`, `email`, `password`, `user_type`, `image`) VALUES
+(2, 'admin', 'admin', 'first', 'admin@gmail.com', '0192023a7bbd73250516f069df18b500', 'admin', NULL),
+(3, 'test', 'test', 'first', 'test@gmail.com', '098f6bcd4621d373cade4e832627b4f6', 'user', 'launch.jpg');
 
 -- --------------------------------------------------------
 
@@ -83,7 +84,8 @@ CREATE TABLE `orderdetails` (
 --
 
 INSERT INTO `orderdetails` (`order_id`, `product_id`, `productdetails_id`, `orderdetails_id`) VALUES
-(43, 20, 6, 8);
+(43, 20, 6, 8),
+(44, 20, 5, 9);
 
 -- --------------------------------------------------------
 
@@ -103,7 +105,8 @@ CREATE TABLE `ordermaster` (
 --
 
 INSERT INTO `ordermaster` (`order_id`, `customer_id`, `order_date`, `userid`) VALUES
-(43, 2, '2024-04-13 11:47:26', 1234567890);
+(43, 2, '2024-04-13 11:47:26', 1234567890),
+(44, 3, '2024-04-14 02:49:30', 123);
 
 -- --------------------------------------------------------
 
@@ -123,7 +126,8 @@ CREATE TABLE `payment` (
 --
 
 INSERT INTO `payment` (`payment_id`, `payment_method`, `transaction_date`, `order_id`) VALUES
-(28, 'Indomaret', '2024-04-13 00:00:00', 43);
+(28, 'Indomaret', '2024-04-13 00:00:00', 43),
+(29, 'Indomaret', '2024-04-14 00:00:00', 44);
 
 -- --------------------------------------------------------
 
@@ -174,7 +178,10 @@ INSERT INTO `productdetails` (`productdetails_id`, `image`, `product_id`, `descr
 (5, 'download.jpeg', 20, '100 diamonds', 100000.00),
 (6, 'download.jpeg', 20, '200 diamonds', 200000.00),
 (7, 'download.jpeg', 20, '300 diamonds', 300000.00),
-(8, 'images.jpeg', 21, '100 uc', 100000.00);
+(8, 'images.jpeg', 21, '100 uc', 100000.00),
+(9, 'eafc.jpg', NULL, NULL, NULL),
+(10, 'eafc.jpg', NULL, NULL, NULL),
+(11, 'eafc.jpg', NULL, NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -249,19 +256,19 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `orderdetails`
 --
 ALTER TABLE `orderdetails`
-  MODIFY `orderdetails_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `orderdetails_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `ordermaster`
 --
 ALTER TABLE `ordermaster`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -273,7 +280,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `productdetails`
 --
 ALTER TABLE `productdetails`
-  MODIFY `productdetails_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `productdetails_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
