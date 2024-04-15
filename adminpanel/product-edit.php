@@ -15,6 +15,32 @@ if (isset($_GET['id'])) {
 if (isset($_POST['editBtn'])) {
     $description = mysqli_real_escape_string($conn, $_POST['description']);
     $price = $_POST['price'];
+    
+    $target_dir = "../image/";
+    $fileNames = basename($_FILES["image"]["name"]);
+    $target_file = $target_dir . $fileNames;
+    $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+    $image_size = $_FILES["image"]["size"];
+
+    if (getimagesize($_FILES["image"]["tmp_name"]) === false) {
+        echo "File is not an image.";
+        exit();
+    }
+
+    if ($image_size > 500000) {
+        echo "Sorry, your file is too large.";
+        exit();
+    }
+
+    if (!in_array($imageFileType, ["jpg", "jpeg", "png"])) {
+        echo "Sorry, only JPG, JPEG & PNG files are allowed.";
+        exit();
+    }
+
+    if (!move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+        echo "Sorry, there was an error uploading your file.";
+        exit();
+    }
 
     if (isset($_FILES['image']) && $_FILES['image']['error'] === 0) {
         $image = $_FILES['image'];
