@@ -1,4 +1,4 @@
-@ -1,23 +1,29 @@
+
 <?php
 include "config.php";
 session_start();
@@ -29,3 +29,8 @@ session_start();
             <li>Fikhar Gifari</li>
         </ul>
     </div>
+
+    
+</body>
+<?php require "footer.php"; ?>
+</html>

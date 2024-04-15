@@ -123,7 +123,7 @@ if ($id !== null) {
             </button>
         </form>
     </div>
-
+    <?php require "footer.php"; ?>
 </body>
 
 </html>
