@@ -6,29 +6,26 @@
             <div class="flex h-full w-full flex-col justify-between lg:flex-row md:justify-center md:space-x-10">
                 <div class="w-full space-y-4 xl:col-span-1">
                     <img alt="logo" src="https://flowbite.com/docs/images/logo.svg" width="200" height="100" decoding="async" data-nimg="1" class="h-50 w-100 md:h-[110px] md:w-[270px]" loading="lazy" style="color:transparent"/>
-                    <p class="text-base" style="color:#ffffff">Top Up Game Favorit Kamu Di ItSeven Agar Main Game Semakin Seru. Pengiriman Cepat Dan Berbagai Macam Game Populer Seperti Mobile Legends, Weekly Diamond Pass, PUBG Mobile, Valorant, Dragon Nest 2, Metal Slug, Fc Mobile, Zepeto, Super Sus, State Of Survival, Clash Of Clans, Brawl Starts, Free Fire, Garena Undawn, Ragnarok Origin, Genshin Impact, Seal M Sea, Ace Racer, Tower Of Fantasy, Wild Rift, Arena Of Valor, Call Of Duty Mobile, Sausage Man Dan Berbagai Game Lainnya Yang Tidak Kalah Seru Untuk Kamu Mainkan.</p>
+                    <p class="text-base" style="color:#ffffff">Top up your favorite games at ItSeven to make playing games even more exciting. Fast Delivery And Various Popular Games Such As Mobile Legends, Weekly Diamond Pass, PUBG Mobile, Valorant, Dragon Nest 2, Metal Slug, Fc Mobile, Zepeto, Super Sus, State Of Survival, Clash Of Clans, Brawl Starts, Free Fire, Garena Undawn, Ragnarok Origin, Genshin Impact, Seal M Sea, Ace Racer, Tower Of Fantasy, Wild Rift, Arena Of Valor, Call Of Duty Mobile, Sausage Man And Various Other Games That Are No Less Exciting For You To Play.</p>
                 </div>
                 <div class="w-full flex flex-col">
                     <div class="mt-8 flex gap-12 whitespace-nowrap justify-start md:justify-between w-full flex-wrap" style="color:#ffffff">
                         <div>
-                            <h3 class="text-sm font-bold uppercase">PETA SITUS</h3>
+                            <h3 class="text-sm font-bold uppercase">SITE MAP</h3>
                             <ul class="mt-4 space-y-4">
                                 <li>
-                                    <a class="text-base" href="home.php">Beranda</a>
+                                    <a class="text-base" href="home.php">Home page</a>
                                 </li>
                                 <li>
-                                    <a class="text-base" href="home.php">Semua Game</a>
+                                    <a class="text-base" href="home.php">All Game</a>
                                 </li>
                                 <li>
-                                    <a class="text-base" href="index.php">Masuk</a>
-                                </li>
-                                <li>
-                                    <a class="text-base" href="register.php">Daftar</a>
+                                    <a class="text-base" href="register.php">Register</a>
                                 </li>
                             </ul>
                         </div>
                         <div>
-                            <h3 class="text-sm font-bold uppercase">TOP UP LAINNYA</h3>
+                            <h3 class="text-sm font-bold uppercase">OTHER TOP UP</h3>
                             <ul class="mt-4 space-y-4">
                                 <li>
                                     <a class="text-base" href="product.php?id=20">Mobile Legends</a>
@@ -50,9 +47,9 @@
         </div>
         <div class="bg-gray-800 py-6">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <p class="text-center text-base text-gray-400">&copy; 2024 ITseven. Semua Hak Cipta</p>
+                <p class="text-center text-base text-gray-400">&copy; 2024 ITseven. All Rights Reserved</p>
                 <div class="flex justify-center mt-4 space-x-6">
-                    <a href="about.php" class="text-gray-400 hover:text-gray-300 transition ease-in-out duration-150">Tentang Kami</a>
+                    <a href="about.php" class="text-gray-400 hover:text-gray-300 transition ease-in-out duration-150">About Us</a>
                 </div>
             </div>
         </div>
