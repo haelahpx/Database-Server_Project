@@ -1,3 +1,4 @@
+@ -1,23 +1,29 @@
 <?php
 include "config.php";
 session_start();
@@ -27,8 +28,4 @@ session_start();
             <li>Samuel Adoman Manalu</li>
             <li>Fikhar Gifari</li>
         </ul>
-        <p class="text-lg mb-6">We are committed to providing the best service to our customers and continuously improving the quality of our services.</p>
-        <p class="text-lg mb-6">Thank you for visiting <span class="font-bold">ItSeven</span>. Feel free to contact us if you have any questions or need assistance.</p>
     </div>
-</body>
-</html>

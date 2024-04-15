@@ -34,7 +34,7 @@ $result_game = mysqli_query($conn, $query_game);
         <?php while ($row = mysqli_fetch_assoc($result)): ?>
             <div class="max-w-sm rounded overflow-hidden shadow-lg m-4 relative">
                 <a href="product.php?id=<?php echo $row['product_id']; ?>" class="relative block group">
-                    <img class="object-cover w-48 h-48 transform transition-transform hover:scale-50 z-0 hover:blur-sm" src="image/<?php echo $row['image']; ?>" alt="<?php echo $row['product_name']; ?>">
+                    <img class="h-48 w-40 object-cover object-center group-hover:blur-xl transition-all duration-200 ease-in-out !rounded-[20px]" src="image/<?php echo $row['image']; ?>" alt="<?php echo $row['product_name']; ?>">
                     <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
                         <span class="font-bold text-xl text-white"><?php echo $row['product_name']; ?></span>
                     </div>
@@ -47,7 +47,7 @@ $result_game = mysqli_query($conn, $query_game);
         <?php while ($row = mysqli_fetch_assoc($result_game)): ?>
             <div class="max-w-sm rounded overflow-hidden shadow-lg m-4 relative">
                 <a href="product.php?id=<?php echo $row['product_id']; ?>" class="relative block group">
-                    <img class="object-cover w-48 h-48 transform transition-transform hover:scale-50 z-0 hover:blur-sm" src="image/<?php echo $row['image']; ?>" alt="<?php echo $row['product_name']; ?>">
+                    <img class="h-48 w-40 object-cover object-center group-hover:blur-xl transition-all duration-200 ease-in-out !rounded-[20px]" src="image/<?php echo $row['image']; ?>" alt="<?php echo $row['product_name']; ?>">
                     <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
                         <span class="font-bold text-xl text-white"><?php echo $row['product_name']; ?></span>
                     </div>
@@ -55,5 +55,6 @@ $result_game = mysqli_query($conn, $query_game);
             </div>
         <?php endwhile; ?>
     </div>
+    <?php require "footer.php"; ?>
 </body>
 </html>
