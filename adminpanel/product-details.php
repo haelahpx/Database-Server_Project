@@ -119,6 +119,7 @@ if (isset($_POST['editImage'])) {
 <body class="bg-gray-100">
 
     <?php include "navbar.php"; ?>
+    <a href="product.php" class="block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300">Back</a>
 
     <div class="container mx-auto py-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 p-3">

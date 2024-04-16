@@ -5,7 +5,7 @@
         <div class="mx-auto max-w-7xl py-8 px-4 sm:px-6 lg:pt-14 lg:px-14">
             <div class="flex h-full w-full flex-col justify-between lg:flex-row md:justify-center md:space-x-10">
                 <div class="w-full space-y-4 xl:col-span-1">
-                    <img alt="logo" src="https://flowbite.com/docs/images/logo.svg" width="200" height="100" decoding="async" data-nimg="1" class="h-50 w-100 md:h-[110px] md:w-[270px]" loading="lazy" style="color:transparent"/>
+                    <img alt="logo" src="image/logo.png" width="50" height="100" decoding="async" data-nimg="1" class="h-50 w-100 md:h-[110px] md:w-[270px]" loading="lazy" style="color:transparent"/>
                     <p class="text-base" style="color:#ffffff">Top up your favorite games at ItSeven to make playing games even more exciting. Fast Delivery And Various Popular Games Such As Mobile Legends, Weekly Diamond Pass, PUBG Mobile, Valorant, Dragon Nest 2, Metal Slug, Fc Mobile, Zepeto, Super Sus, State Of Survival, Clash Of Clans, Brawl Starts, Free Fire, Garena Undawn, Ragnarok Origin, Genshin Impact, Seal M Sea, Ace Racer, Tower Of Fantasy, Wild Rift, Arena Of Valor, Call Of Duty Mobile, Sausage Man And Various Other Games That Are No Less Exciting For You To Play.</p>
                 </div>
                 <div class="w-full flex flex-col">

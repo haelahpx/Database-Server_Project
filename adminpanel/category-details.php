@@ -22,9 +22,9 @@ $data = mysqli_fetch_array($query);
     <?php require "navbar.php"; ?>
 
 
-    <div class="container mx-auto mt-8 flex justify-center"> 
-        <div class="w-full md:w-1/2 bg-white rounded-lg shadow-md p-4"> 
-            <h2 class="text-xl font-bold mb-4 ml-0">Details Category</h2> 
+    <div class="container mx-auto mt-8 flex justify-center">
+        <div class="w-full md:w-1/2 bg-white rounded-lg shadow-md p-4">
+            <h2 class="text-xl font-bold mb-4 ml-0">Details Category</h2>
             <form action="" method="post" class="space-y-4">
                 <div>
                     <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
@@ -38,7 +38,7 @@ $data = mysqli_fetch_array($query);
             </form>
             <?php
             if (isset($_POST['editBtn'])) {
-                $category = htmlspecialchars($_POST['category']); 
+                $category = htmlspecialchars($_POST['category']);
 
                 if ($data['category_name'] == $category) {
             ?>
@@ -76,7 +76,7 @@ $data = mysqli_fetch_array($query);
                                 </div>
                                 <meta http-equiv="refresh" content="1; url=category.php" />
                             </div>
-                    <?php
+                            <?php
                         } else {
                             echo mysqli_error($conn);
                         }
@@ -85,28 +85,59 @@ $data = mysqli_fetch_array($query);
             }
 
             if (isset($_POST['deleteBtn'])) {
+                // Retrieve category_id from product table using product_id from productdetails table
+                $categoryIdQuery = mysqli_query($conn, "SELECT c.category_id, p.product_id, pd.productdetails_id 
+                FROM product p 
+                LEFT JOIN productdetails pd ON p.product_id = pd.product_id 
+                JOIN category c ON p.category_id = c.category_id 
+                WHERE c.category_id = $id;
+                ");
+                
+                if ($categoryIdQuery) {
+                    if(mysqli_num_rows($categoryIdQuery) > 0) {
+                        $categoryIdRow = mysqli_fetch_assoc($categoryIdQuery);
+            
+                        $deleteProductDetailsQuery = mysqli_query($conn, "DELETE FROM productdetails WHERE product_id = '$id'");
+            
+                        if ($deleteProductDetailsQuery) {
+                            $deleteProductsQuery = mysqli_query($conn, "DELETE FROM product WHERE category_id = '{$categoryIdRow['category_id']}'");
 
-                $deleteQuery = mysqli_query($conn, "DELETE FROM category WHERE category_id = '$id'");
-
-                if ($deleteQuery) {
-                    ?>
-                    <div class="flex items-center p-4 mt-3 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                        <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
-                        </svg>
-                        <span class="sr-only">Info</span>
-                        <div>
-                            <span class="font-medium">Delete alert!</span> category has been removed.
-                        </div>
-                        <meta http-equiv="refresh" content="1; url=category.php" />
-                    </div>
-            <?php
+            
+                            if ($deleteProductsQuery) {
+                                $deleteCategoryQuery = mysqli_query($conn, "DELETE FROM category WHERE category_id = '$id'");
+            
+                                if ($deleteCategoryQuery) {
+                                    ?>
+                                    <div class="flex items-center p-4 mt-3 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                        <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                                        </svg>
+                                        <span class="sr-only">Info</span>
+                                        <div>
+                                            <span class="font-medium">Delete alert!</span> Category and associated products have been deleted.
+                                        </div>
+                                        <meta http-equiv="refresh" content="1; url=category.php" />
+                                    </div>
+                                    <?php
+                                } else {
+                                    echo mysqli_error($conn);
+                                }
+                            } else {
+                                echo mysqli_error($conn);
+                            }
+                        } else {
+                            echo mysqli_error($conn);
+                        }
+                    } else {
+                        echo "No category found for the given product ID.";
+                    }
+                } else {
+                    echo mysqli_error($conn);
                 }
-            } else {
-                echo mysqli_error($conn);
             }
-
-
+            
+            
+            
             ?>
 
 

@@ -2,27 +2,37 @@
 session_start();
 require "../config.php";
 
-$query = mysqli_query($conn, "SELECT product.*, category.category_name FROM product JOIN category ON product.category_id = category.category_id");
-$totalProduct = mysqli_num_rows($query);
+$query_game = mysqli_query($conn, "SELECT product.*, category.category_name FROM product JOIN category ON product.category_id = category.category_id WHERE category.category_name = 'game'");
+$totalProductGame = mysqli_num_rows($query_game);
+
+$query_ewallet = mysqli_query($conn, "SELECT product.*, category.category_name FROM product JOIN category ON product.category_id = category.category_id WHERE category.category_name = 'e-walllet'");
+$totalProductEwallet = mysqli_num_rows($query_ewallet);
 
 if(isset($_GET['delete_id'])) {
     $delete_id = mysqli_real_escape_string($conn, $_GET['delete_id']);
 
-    $deleteProductDetailsQuery = mysqli_query($conn, "DELETE FROM productdetails WHERE product_id = '$delete_id'");
-    if($deleteProductDetailsQuery) {
-        $deleteProductQuery = mysqli_query($conn, "DELETE FROM product WHERE product_id = '$delete_id'");
-        if($deleteProductQuery) {
-            header("Location: product.php");
-            exit();
+    $deleteOrderDetailsQuery = mysqli_query($conn, "DELETE FROM orderdetails WHERE productdetails_id IN (SELECT productdetails_id FROM productdetails WHERE product_id = '$delete_id')");
+    if($deleteOrderDetailsQuery) {
+        $deleteProductDetailsQuery = mysqli_query($conn, "DELETE FROM productdetails WHERE product_id = '$delete_id'");
+        if($deleteProductDetailsQuery) {
+            $deleteProductQuery = mysqli_query($conn, "DELETE FROM product WHERE product_id = '$delete_id'");
+            if($deleteProductQuery) {
+                header("Location: product.php");
+                exit();
+            } else {
+                echo "Error deleting product record: " . mysqli_error($conn);
+                exit();
+            }
         } else {
-            echo "Error deleting product record: " . mysqli_error($conn);
+            echo "Error deleting related product details: " . mysqli_error($conn);
             exit();
         }
     } else {
-        echo "Error deleting related product details: " . mysqli_error($conn);
+        echo "Error deleting related order details: " . mysqli_error($conn);
         exit();
     }
 }
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $product_name = $_POST['product_name'];
@@ -83,7 +93,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-?><!DOCTYPE html>
+?>
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -96,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <?php require "navbar.php"; ?>
     <div class="max-w-4xl mx-auto bg-white rounded-lg">
-        <h1 class="text-3xl font-bold text-gray-800 my-6">List Product</h1>
+        <h1 class="text-3xl font-bold text-gray-800 my-6">List Product (Game)</h1>
         <div class="overflow-hidden shadow-md rounded-lg">
             <table class="w-full">
                 <thead>
@@ -109,13 +121,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </thead>
                 <tbody>
                     <?php
-                    if ($totalProduct == 0) { ?>
+                    if ($totalProductGame == 0) { ?>
                         <tr>
-                            <td colspan="5" class="text-center py-8 text-gray-600">There is no product data in the database</td>
+                            <td colspan="5" class="text-center py-8 text-gray-600">There is no product data in the game category</td>
                         </tr>
                     <?php } else {
                         $number = 1;
-                        while ($data = mysqli_fetch_array($query)) {
+                        while ($data = mysqli_fetch_array($query_game)) {
                     ?>
                             <tr class="border-b border-gray-200 hover:bg-gray-100">
                                 <td class="py-3 px-4"><?= $number ?></td>
@@ -123,10 +135,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <td class="py-3 px-4"><?= $data["category_name"] ?></td>
                                 <td class="py-3 px-4">
                                     <a href="product-details.php?id=<?= $data['product_id'] ?>" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 inline-block align-middle mr-2">
-                                            <path d="M8.25 10.875a2.625 2.625 0 1 1 5.25 0 2.625 2.625 0 0 1-5.25 0Z" />
-                                            <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25Zm-1.125 4.5a4.125 4.125 0 1 0 2.338 7.524l2.007 2.006a.75.75 0 1 0 1.06-1.06l-2.006-2.007a4.125 4.125 0 0 0-3.399-6.463Z" clip-rule="evenodd" />
-                                        </svg>
                                         Details
                                     </a>
                                     <a href="?delete_id=<?= $data['product_id'] ?>" onclick="return confirm('Are you sure you want to delete this product?')" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
@@ -143,6 +151,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </table>
         </div>
     </div>
+
+    <div class="max-w-4xl mx-auto bg-white rounded-lg">
+        <h1 class="text-3xl font-bold text-gray-800 my-6">List Product (E-Wallet)</h1>
+        <div class="overflow-hidden shadow-md rounded-lg">
+            <table class="w-full">
+                <thead>
+                    <tr class="bg-gray-200 text-gray-700">
+                        <th class="py-3 px-4 text-left">No</th>
+                        <th class="py-3 px-4 text-left">Product</th>
+                        <th class="py-3 px-4 text-left">Category</th>
+                        <th class="py-3 px-4 text-left">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if ($totalProductEwallet == 0) { ?>
+                        <tr>
+                            <td colspan="5" class="text-center py-8 text-gray-600">There is no product data in the e-wallet category</td>
+                        </tr>
+                    <?php } else {
+                        $number = 1;
+                        while ($data = mysqli_fetch_array($query_ewallet)) {
+                    ?>
+                            <tr class="border-b border-gray-200 hover:bg-gray-100">
+                                <td class="py-3 px-4"><?= $number ?></td>
+                                <td class="py-3 px-4"><?= $data["product_name"] ?></td>
+                                <td class="py-3 px-4"><?= $data["category_name"] ?></td>
+                                <td class="py-3 px-4">
+                                    <a href="product-details.php?id=<?= $data['product_id'] ?>" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                        Details
+                                    </a>
+                                    <a href="?delete_id=<?= $data['product_id'] ?>" onclick="return confirm('Are you sure you want to delete this product?')" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                        Delete
+                                    </a>
+                                </td>
+                            </tr>
+                    <?php
+                            $number++;
+                        }
+                    } ?>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Add Product Form -->
     <div class="max-w-4xl mx-auto pt-4">
         <div class="bg-white shadow-md rounded-lg">
             <h3 class="text-lg font-bold mb-4 text-gray-800 px-6 py-4 border-b border-gray-200">Add Product</h3>
@@ -153,7 +208,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="image">Image</label>
-                    <input type="file" name="image" id="image" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required >
+                    <input type="file" name="image" id="image" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                 </div>
                 <div>
                     <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
@@ -171,6 +226,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <button type="submit" name="save" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Save</button>
                 </div>
             </form>
+            <!-- PHP Form Submission and Alerts -->
             <?php
             if (isset($_POST['save'])) {
                 $product_name = htmlspecialchars($_POST['product_name']);

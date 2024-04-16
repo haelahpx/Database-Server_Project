@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2024 at 01:41 AM
+-- Generation Time: Apr 16, 2024 at 09:12 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -38,8 +38,7 @@ CREATE TABLE `category` (
 
 INSERT INTO `category` (`category_id`, `category_name`) VALUES
 (2, 'game'),
-(3, 'BPJS'),
-(4, 'listrik');
+(5, 'e-walllet');
 
 -- --------------------------------------------------------
 
@@ -64,7 +63,7 @@ CREATE TABLE `customers` (
 
 INSERT INTO `customers` (`customer_id`, `username`, `first_name`, `last_name`, `email`, `password`, `user_type`, `image`) VALUES
 (2, 'admin', 'admin', 'first', 'admin@gmail.com', '0192023a7bbd73250516f069df18b500', 'admin', NULL),
-(3, 'test', 'test', 'first', 'test@gmail.com', '098f6bcd4621d373cade4e832627b4f6', 'user', 'launch.jpg');
+(3, 'test', 'test', 'first', 'test@gmail.com', '098f6bcd4621d373cade4e832627b4f6', 'user', '2179151c492c743e10b15dca9bec671e.jpg');
 
 -- --------------------------------------------------------
 
@@ -78,14 +77,6 @@ CREATE TABLE `orderdetails` (
   `productdetails_id` int(11) DEFAULT NULL,
   `orderdetails_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `orderdetails`
---
-
-INSERT INTO `orderdetails` (`order_id`, `product_id`, `productdetails_id`, `orderdetails_id`) VALUES
-(43, 20, 6, 8),
-(44, 20, 5, 9);
 
 -- --------------------------------------------------------
 
@@ -106,7 +97,8 @@ CREATE TABLE `ordermaster` (
 
 INSERT INTO `ordermaster` (`order_id`, `customer_id`, `order_date`, `userid`) VALUES
 (43, 2, '2024-04-13 11:47:26', 1234567890),
-(44, 3, '2024-04-14 02:49:30', 123);
+(44, 3, '2024-04-14 02:49:30', 123),
+(45, 3, '2024-04-16 02:33:23', 2147483647);
 
 -- --------------------------------------------------------
 
@@ -127,7 +119,8 @@ CREATE TABLE `payment` (
 
 INSERT INTO `payment` (`payment_id`, `payment_method`, `transaction_date`, `order_id`) VALUES
 (28, 'Indomaret', '2024-04-13 00:00:00', 43),
-(29, 'Indomaret', '2024-04-14 00:00:00', 44);
+(29, 'Indomaret', '2024-04-14 00:00:00', 44),
+(30, 'Qris', '2024-04-16 00:00:00', 45);
 
 -- --------------------------------------------------------
 
@@ -147,14 +140,30 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`product_id`, `image`, `category_id`, `product_name`) VALUES
-(20, 'mobile_legends.jpg', 2, 'mobile-legends'),
 (21, 'pubg_mobile.jpg', 2, 'PUBG'),
-(22, 'BPJS.jpg', 3, 'BPJS Kesehatan'),
-(23, 'PLN.jpg', 4, 'PLN'),
-(24, 'steam.jpg', 2, 'Steam Wallet'),
 (25, 'freefire.jpg', 2, 'Free Fire'),
 (26, 'eafc.jpg', 2, 'EA SPORT FC Mobile'),
-(27, 'coc.jpg', 2, 'Clach of Clans');
+(28, 'gopay.png', 5, 'Go-Pay'),
+(29, 'dana.jpg', 5, 'DANA'),
+(30, 'ovo.png', 5, 'OVO'),
+(31, 'spay.png', 5, 'Shopee-Pay'),
+(32, 'linkaja.png', 5, 'LinkAja'),
+(33, 'isaku.png', 5, 'I-Saku'),
+(34, 'yukk.png', 5, 'Yukk'),
+(35, 'steam.jpg', 5, 'Steam-Wallet'),
+(36, 'codm.jpg', 2, 'Call of Duty Mobile'),
+(37, 'genshin.jpg', 2, 'Genshin Impact'),
+(38, 'hayday.jpg', 2, 'HayDay'),
+(39, 'honkaiimpact.jpg', 2, 'Honkai Impact 3'),
+(40, 'honkairail.jpg', 2, 'Honkai Star Rail'),
+(41, 'legendsofrunetrra.jpg', 2, 'Legend of Runeterra'),
+(42, 'lol.jpg', 2, 'League of Legends'),
+(43, 'metalslug.jpg', 2, 'Metal Slug'),
+(44, 'supersus.jpg', 2, 'SuperSus'),
+(45, 'ttm.jpg', 2, 'Teamfight Tactics Mobile'),
+(46, 'undawn.jpg', 2, 'Undawn'),
+(47, 'valorant.jpg', 2, 'Valorant'),
+(49, 'mobile_legends.jpg', 2, 'Mobile Legends');
 
 -- --------------------------------------------------------
 
@@ -175,13 +184,22 @@ CREATE TABLE `productdetails` (
 --
 
 INSERT INTO `productdetails` (`productdetails_id`, `image`, `product_id`, `description`, `price`) VALUES
-(5, 'download.jpeg', 20, '100 diamonds', 100000.00),
-(6, 'download.jpeg', 20, '200 diamonds', 200000.00),
-(7, 'download.jpeg', 20, '300 diamonds', 300000.00),
-(8, 'images.jpeg', 21, '100 uc', 100000.00),
+(8, 'uc_pubg.png', 21, '100 uc', 100000.00),
 (9, 'eafc.jpg', NULL, NULL, NULL),
 (10, 'eafc.jpg', NULL, NULL, NULL),
-(11, 'eafc.jpg', NULL, NULL, NULL);
+(11, 'eafc.jpg', NULL, NULL, NULL),
+(12, 'diamond.jpg', 49, '100 diamonds', 100.00),
+(13, 'diamond.jpg', 25, '100 diamonds', 100.00),
+(14, 'fc.jpeg', 26, '100 FC POINT', 100.00),
+(15, 'cp.jpeg', 36, '100 CP', 100.00),
+(16, 'diamond.jpg', 37, '300 Genesis Crystals', 100.00),
+(17, 'diamond.jpg', 38, '300 diamonds', 100.00),
+(18, 'diamond.jpg', 39, '500 Crystals', 100.00),
+(19, 'oneiric.jpeg', 40, '1000 Oneiric Shard', 100.00),
+(21, 'coinlor.jpeg', 41, '1100 Coins', 100.00),
+(23, 'lol.png', 42, '900 Wild Cores', 100.00),
+(24, 'ruby.jpeg', 43, '100 Ruby', 100.00),
+(25, 'gopay.png', 28, '100.000', 100500.00);
 
 --
 -- Indexes for dumped tables
@@ -244,7 +262,7 @@ ALTER TABLE `productdetails`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `customers`
@@ -256,31 +274,31 @@ ALTER TABLE `customers`
 -- AUTO_INCREMENT for table `orderdetails`
 --
 ALTER TABLE `orderdetails`
-  MODIFY `orderdetails_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `orderdetails_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `ordermaster`
 --
 ALTER TABLE `ordermaster`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `productdetails`
 --
 ALTER TABLE `productdetails`
-  MODIFY `productdetails_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `productdetails_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- Constraints for dumped tables
