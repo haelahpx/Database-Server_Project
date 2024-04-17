@@ -33,7 +33,7 @@ $data_customer = mysqli_fetch_array($query_customer);
         }
     }
 </style>
-<nav class="bg-white border-gray-200 dark:bg-gray-900">
+<nav class="sticky top-0 z-40 bg-white border-gray-200 dark:bg-gray-900">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="home.php" class="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="image/logo.png" class="h-8" alt="Flowbite Logo" />
