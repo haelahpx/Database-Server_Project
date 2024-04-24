@@ -31,14 +31,13 @@ $result_game = mysqli_query($conn, $query_game);
     <?php require "navbar.php"; ?>
 
     <div class="w-10/12 2xl mx-auto">
-
         <div id="default-carousel" class="relative rounded-lg overflow-hidden shadow-lg mt-5 " data-carousel="static">
             <div class="relative h-80 md:h-96" data-carousel-inner>
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
                     <img src="image/test.png" class="object-cover w-full h-full" alt="Slide 1">
                 </div>
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="image/test.png" class="object-cover w-full h-full" alt="Slide 2">
+                    <img src="image/test2.png" class="object-cover w-full h-full" alt="Slide 2">
                 </div>
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
                     <img src="image/test.png" class="object-cover w-full h-full" alt="Slide 3">

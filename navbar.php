@@ -28,6 +28,7 @@ $data_customer = mysqli_fetch_array($query_customer);
         #text {
             font-size: smaller;
         }
+
         #user-dropdown {
             right: calc(42rem);
         }
@@ -36,9 +37,10 @@ $data_customer = mysqli_fetch_array($query_customer);
 <nav class="sticky top-0 z-40 bg-white border-gray-200 dark:bg-gray-900">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="home.php" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="image/logo.png" class="h-8" alt="Flowbite Logo" />
+            <img src="image/logo.png" class="h-8 hover:scale-110 hover:rotate-180 transition-transform duration-300" alt="Flowbite Logo" />
             <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">ItSeven</span>
         </a>
+
         <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                 <span class="sr-only">Open user menu</span>
