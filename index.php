@@ -1,69 +1,108 @@
 <?php
-include 'config.php';
+include "config.php";
 session_start();
 
-if (isset($_POST['submit'])) {
-    if(isset($_POST['email'], $_POST['password'])) {
-        $email = mysqli_real_escape_string($conn, $_POST['email']);
-        $pass = md5($_POST['password']);
+$query = "SELECT * FROM product";
+$result = mysqli_query($conn, $query);
 
-        $select = "SELECT * FROM customers WHERE email = '$email' AND password = '$pass'";
-        $result = mysqli_query($conn, $select);
+$query_eWallet = "SELECT product.* FROM product 
+            INNER JOIN category ON product.category_id = category.category_id
+            WHERE category.category_name = 'e-walLlet'";
+$result_eWallet = mysqli_query($conn, $query_eWallet);
 
-        if (mysqli_num_rows($result) > 0) {
+$query_game = "SELECT product.* FROM product 
+            INNER JOIN category ON product.category_id = category.category_id
+            WHERE category.category_name = 'game'";
+$result_game = mysqli_query($conn, $query_game);
 
-            $row = mysqli_fetch_array($result);
-            $_SESSION['customer_id'] = $row['customer_id'];
-    
-            if ($row['user_type'] == 'admin') {
-    
-                $_SESSION['admin_name'] = $row['username'];
-                header('location:adminpanel/index.php');
-                $_SESSION['user_name'] = $row['username'];
-                header('location:adminpanel/index.php');
-                $_SESSION['email'] = $row['email'];
-                header('location:adminpanel/index.php');
-                $_SESSION['title'] = $row['title']; 
-                header('location:adminpanel/index.php');
-            } elseif ($row['user_type'] == 'user') {
-                $_SESSION['user_name'] = $row['username'];
-                header('location:home.php');
-                $_SESSION['email'] = $row['email'];
-                header('location:home.php');
-                $_SESSION['title'] = $row['title'];
-                header('location:home.php');
-            }
-        } else {
-            $error = 'Incorrect email or password!';
-        }
-    } else {
-        $error = 'Please fill in all the fields!';
-    }
-}
+
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>test</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:ital@1&family=Roboto:ital,wght@0,300;0,500;1,400&family=VT323&display=swap" rel="stylesheet">
+    <title>Document</title>
 </head>
-<body class="flex items-center font-[VT323] bg-[url('../images/gray.jpg')] bg-no-repeat bg-cover  select-none">
-    <section class="w-[100%] h-[100vh] flex items-center justify-center">
-        <div class="w-[30rem] h-[25em] bg-transparent backdrop-blur-lg border-2 rounded-lg shadow-lg flex flex-col items-center justify-center space-y-4">
-            <form action="" method="post" class="flex flex-col items-center justify-center space-y-4">
-                <h1 class="font-bold text-[2.5rem] border-b-4 px-4">Login</h1>
-                <input type="email" name="email" id="" placeholder="Enter your Email Address" class="border-2 rounded-full px-4 py-2 text-[1.2rem] w-[20rem]">
-                <input type="password" name="password" id="" placeholder="Enter your Password" class="border-2 rounded-full px-4 py-2 text-[1.2rem] w-[20rem]">
-                <button name="submit" class="border-2 rounded-lg px-2 py-2 w-[14rem] hover:scale-110 transition-all duration-300 hover:text-white hover:bg-blue-400">Login</button>
-                <p>Don't have an acccount? <a href="register.php" class="text-blue-400">Register here</a>!</p>
-            </form>
+
+<body class="bg-gray-300">
+    <?php require "navbar.php"; ?>
+
+    <div class="w-10/12 2xl mx-auto">
+        <div id="default-carousel" class="relative rounded-lg overflow-hidden shadow-lg mt-5 " data-carousel="static">
+            <div class="relative h-80 md:h-96" data-carousel-inner>
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <img src="image/test.png" class="object-cover w-full h-full" alt="Slide 1">
+                </div>
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <img src="image/test2.png" class="object-cover w-full h-full" alt="Slide 2">
+                </div>
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <img src="image/test.png" class="object-cover w-full h-full" alt="Slide 3">
+                </div>
+            </div>
+            <div class="flex absolute bottom-5 left-1/2 z-30 -translate-x-1/2 space-x-2" data-carousel-indicators>
+                <button type="button" class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none focus:bg-gray-400 transition"></button>
+                <button type="button" class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none focus:bg-gray-400 transition"></button>
+                <button type="button" class="w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 focus:outline-none focus:bg-gray-400 transition"></button>
+            </div>
+            <button type="button" class="flex absolute top-1/2 left-3 z-40 items-center justify-center w-10 h-10 bg-gray-200/50 rounded-full hover:bg-gray-300 focus:outline-none transition" data-carousel-prev>
+                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+            </button>
+            <button type="button" class="flex absolute top-1/2 right-3 z-40 items-center justify-center w-10 h-10 bg-gray-200/50 rounded-full hover:bg-gray-300 focus:outline-none transition" data-carousel-next>
+                <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
         </div>
-    </section>
+        <script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script>
+    </div>
+
+
+    <h1 class="text-2xl font-bold text-left my-8 pl-36">Game</h1>
+    <div class="flex flex-wrap justify-center">
+        <?php while ($row = mysqli_fetch_assoc($result_game)) : ?>
+            <div class="max-w-sm rounded overflow-hidden shadow-lg m-2 relative">
+                <a href="product.php?id=<?php echo $row['product_id']; ?>" class="relative block group">
+                    <img class="h-48 w-40 object-cover object-center group-hover:blur-xl transition-all duration-200 ease-in-out !rounded-[20px]" src="image/<?php echo $row['image']; ?>" alt="<?php echo $row['product_name']; ?>">
+                    <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                        <span class="font-bold text-xl text-white"><?php echo $row['product_name']; ?></span>
+                    </div>
+                </a>
+            </div>
+        <?php endwhile; ?>
+    </div>
+    <h1 class="text-2xl font-bold text-left my-8 pl-36">E-Wallet</h1>
+    <div class="flex flex-wrap justify-center">
+        <?php while ($row = mysqli_fetch_assoc($result_eWallet)) : ?>
+            <div class="max-w-sm rounded overflow-hidden shadow-lg m-2 relative">
+                <a href="product.php?id=<?php echo $row['product_id']; ?>" class="relative block group">
+                    <img class="h-48 w-40 object-cover object-center group-hover:blur-xl transition-all duration-200 ease-in-out !rounded-[20px]" src="image/<?php echo $row['image']; ?>" alt="<?php echo $row['product_name']; ?>">
+                    <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                        <span class="font-bold text-xl text-white"><?php echo $row['product_name']; ?></span>
+                    </div>
+                </a>
+            </div>
+        <?php endwhile; ?>
+    </div>
+    <h1 class="text-2xl font-bold text-left my-8 pl-36">All Items</h1>
+    <div class="flex flex-wrap justify-center">
+        <?php while ($row = mysqli_fetch_assoc($result)) : ?>
+            <div class="max-w-sm rounded overflow-hidden shadow-lg m-2 relative">
+                <a href="product.php?id=<?php echo $row['product_id']; ?>" class="relative block group">
+                    <img class="h-48 w-40 object-cover object-center group-hover:blur-xl transition-all duration-200 ease-in-out !rounded-[20px]" src="image/<?php echo $row['image']; ?>" alt="<?php echo $row['product_name']; ?>">
+                    <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+                        <span class="font-bold text-xl text-white"><?php echo $row['product_name']; ?></span>
+                    </div>
+                </a>
+            </div>
+        <?php endwhile; ?>
+    </div>
+    <?php require "footer.php"; ?>
 </body>
+
 </html>

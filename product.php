@@ -31,7 +31,7 @@ $result2 = mysqli_query($conn, "SELECT * FROM product WHERE product_id = '$id'")
 
 <body class="bg-gray-100">
     <?php require "navbar.php"; ?>
-    <a href="home.php" class="block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300 mt-4 ml-4">Back</a>
+    <a href="index.php" class="block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300 mt-4 ml-4">Back</a>
 
     <div class="max-w-7xl mx-auto px-4 flex flex-wrap justify-center items-start mt-8">
         <div class="w-full md:w-1/2 lg:w-1/3 pr-4">

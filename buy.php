@@ -5,7 +5,7 @@ session_start();
 if (isset($_SESSION['customer_id'])) {
     $customer_id = $_SESSION['customer_id'];
 } else {
-    echo "Customer ID not found in session.";
+    header("Location: login.php");
     exit(); 
 }
 
@@ -91,7 +91,7 @@ if ($id !== null) {
 
 <body class="font-sans bg-gray-50">
     <?php require "navbar.php"; ?>
-    <a href="home.php" class="block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300">Back</a>
+    <a href="index.php" class="block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300">Back</a>
 
     <div class="flex items-center justify-center pt-10 bg-gray-50">
         <form method="post" class="max-w-md w-full bg-white p-8 rounded-md shadow-md">
