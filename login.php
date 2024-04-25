@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
             </form>
         </div>
         <div class="hidden md:flex md:w-[40%] lg:w-[60%] justify-center items-center">
-            <img src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="w-full" alt="Phone image" />
+            <img src="image/loginreg.png" class="w-full" alt="Phone image" />
         </div>
     </section>
 </body>

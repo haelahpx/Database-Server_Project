@@ -16,7 +16,7 @@
         <div class="flex flex-col-reverse md:flex-row items-center justify-center md:w-[80%] xl:w-[60%]">
             <!-- Image Section -->
             <div class="md:w-[50%] flex justify-center">
-                <img src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" class="w-full" alt="Phone image" />
+                <img src="image/loginreg.png" class="w-full" alt="Phone image" />
             </div>
             <!-- Register Section -->
             <div class="md:w-[50%] px-[4rem] py-[3rem] bg-transparent backdrop-blur-lg rounded-lg flex flex-col items-center justify-center space-y-4">
@@ -42,7 +42,7 @@
                         </select>
                     </div>
                     <button name="submit" class="border-2 border-gray-100 rounded-lg px-2 py-2 w-[14rem] hover:scale-110 transition-all duration-300 hover:text-white hover:bg-blue-400">Register</button>
-                    <p>Already have an account? <a href="index.php" class="text-blue-400">Login here</a>!</p>
+                    <p>Already have an account? <a href="login.php" class="text-blue-400">Login here</a>!</p>
                 </form>
             </div>
         </div>
