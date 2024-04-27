@@ -85,7 +85,6 @@ $data = mysqli_fetch_array($query);
             }
 
             if (isset($_POST['deleteBtn'])) {
-                // Retrieve category_id from product table using product_id from productdetails table
                 $categoryIdQuery = mysqli_query($conn, "SELECT c.category_id, p.product_id, pd.productdetails_id 
                 FROM product p 
                 LEFT JOIN productdetails pd ON p.product_id = pd.product_id 

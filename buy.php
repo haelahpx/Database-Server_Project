@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
             $order_id = mysqli_insert_id($conn); 
 
             if (isset($_POST['payment_method'])) {
-                $payment_method = $_POST['payment_method'];
+                $payment_method = $_POST['payment_method']; 
 
                 $transaction_date = date('Y-m-d');
                 $sql_payment = "INSERT INTO payment (order_id, payment_method, transaction_date) VALUES ('$order_id', '$payment_method', '$transaction_date')";

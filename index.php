@@ -27,6 +27,7 @@ $result_game = mysqli_query($conn, $query_game);
     <title>Document</title>
 </head>
 
+
 <body class="bg-gray-300">
     <?php require "navbar.php"; ?>
 
@@ -40,7 +41,7 @@ $result_game = mysqli_query($conn, $query_game);
                     <img src="image/test2.png" class="object-cover w-full h-full" alt="Slide 2">
                 </div>
                 <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                    <img src="image/test.png" class="object-cover w-full h-full" alt="Slide 3">
+                    <img src="image/cuki.jpg" class="object-cover w-full h-full" alt="Slide 3">
                 </div>
             </div>
             <div class="flex absolute bottom-5 left-1/2 z-30 -translate-x-1/2 space-x-2" data-carousel-indicators>

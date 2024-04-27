@@ -226,7 +226,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <button type="submit" name="save" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Save</button>
                 </div>
             </form>
-            <!-- PHP Form Submission and Alerts -->
             <?php
             if (isset($_POST['save'])) {
                 $product_name = htmlspecialchars($_POST['product_name']);
