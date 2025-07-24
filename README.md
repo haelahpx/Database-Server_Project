@@ -76,7 +76,6 @@ A responsive and user-friendly **Top Up Simulation Website** built using **PHP N
 2. Import the `database.sql` file into your MySQL server.
 3. Update `config.php` (or equivalent) with your DB credentials.
 4. Place the project in your local server directory (e.g., `htdocs` if using XAMPP).
-5. Access the website via `http://localhost/topup-website`.
 
 ---
 
