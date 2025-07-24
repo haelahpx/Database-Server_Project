@@ -1,22 +1,86 @@
-top up website
+# 💳 Top Up Website (PHP Native)
 
-1. website terdiri dari 3 page (home(sekaligus list produk)), (about us), dashboard.
-2. terdapat beberapa kategori (game, e-wallet).
-3. produk pasti masuk salah satu kategori.
-4. foto produk
-5. pengunjung dapat mencari produk 
-6. untuk saat ini website hanya bisa mensimulasikan tidak bisa melakukan top up secara nyata
-7. akan ada 1 admin yang mengatur produk
-8. website harus responsive
-9. terdapat kejelasan produk yang dibeli (nominal harga dan nominal yang akan diperoleh)
-10. admin diberi kebebasan untuk mengatur CRUD dari database
+A responsive and user-friendly **Top Up Simulation Website** built using **PHP Native**. This site allows users to browse and search for digital top-up products like **games** and **e-wallets**, while providing an admin dashboard to manage product data via CRUD operations.
 
+> ⚠️ **Note**: This website is a simulation only — no real top-up transactions are performed.
 
-home page
-1. tersedia navbar 
-2. tampilan 2 kategori (game, e-wallet)
-3. tampilan produk
-4. terdapat filter berdasarkan kategori
+---
 
-about us
-1. menampilkan foto tentang website dan penjelasan tentang website
+## 🧩 Features
+
+- 🔍 **Product Search** — Quickly find top-up products using keywords.
+- 🧮 **Category Filter** — Filter products by categories: **Game** and **E-Wallet**.
+- 🛍️ **Clear Product Info** — Each product displays:
+  - Name
+  - Image
+  - Price (nominal)
+  - Top-up value to be received
+- 🖼️ **Image Display** — Each product has a relevant image.
+- 🧑‍💼 **Admin Dashboard** — Manage all product data with full **CRUD** functionality.
+- 🌐 **Responsive Design** — Fully responsive for desktop and mobile views.
+- 🛑 **Simulation-Only** — Real payments and top-ups are not processed.
+
+---
+
+## 🗂️ Pages Overview
+
+### 🏠 Home Page
+- Navigation bar for page links.
+- Product listing section showing both **Game** and **E-Wallet** categories.
+- Filter and search functionality.
+- Product cards with essential details (image, price, top-up amount).
+
+### ℹ️ About Us Page
+- Photo/visual representation of the website.
+- Description of the site's purpose, features, and goals.
+
+### 📊 Admin Dashboard
+- Restricted area for admin only.
+- Admin can:
+  - Create new product entries
+  - Update or delete existing products
+  - Assign products to categories
+- Direct manipulation of database using forms and PHP logic.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Language**: PHP Native (No frameworks)
+- **Frontend**: HTML, CSS, JavaScript
+- **Database**: MySQL
+- **Styling**: Custom CSS / Bootstrap
+- **Icons**: FontAwesome or similar
+
+---
+
+## 📌 System Notes
+
+- Each product belongs to a specific category: **Game** or **E-Wallet**.
+- One admin account manages all product-related content.
+- Product clarity includes both price and received value displayed to users.
+- Fully mobile-responsive using modern layout techniques (Flexbox/Grid).
+
+---
+
+## 📷 Screenshots
+
+> _Add your project screenshots here (Home page, Product listing, Dashboard, About Us)._
+
+---
+
+## 🖥️ Installation
+
+1. Clone or download this repository.
+2. Import the `database.sql` file into your MySQL server.
+3. Update `config.php` (or equivalent) with your DB credentials.
+4. Place the project in your local server directory (e.g., `htdocs` if using XAMPP).
+5. Access the website via `http://localhost/topup-website`.
+
+---
+
+## 🔐 Admin Access
+
+- Ensure the admin panel is properly protected (authentication recommended).
+- Admin can access `/admin/` or equivalent route to manage products.
+
