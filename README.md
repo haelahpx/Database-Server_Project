@@ -65,7 +65,8 @@ A responsive and user-friendly **Top Up Simulation Website** built using **PHP N
 
 ## 📷 Screenshots
 
-> _Add your project screenshots here (Home page, Product listing, Dashboard, About Us)._
+<img width="781" height="384" alt="image" src="https://github.com/user-attachments/assets/29fc2c03-fd92-4176-bad2-8cb685df7fe9" />
+
 
 ---
 
